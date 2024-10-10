@@ -33,7 +33,9 @@ public static SessionFactory getSessionFactory() {
             configuration.addAnnotatedClass(com.edu.umg.model.Tipo.class);
             configuration.addAnnotatedClass(com.edu.umg.model.Libro.class);
             configuration.addAnnotatedClass(com.edu.umg.model.Prestamo.class);
-
+            configuration.addAnnotatedClass(com.edu.umg.model.Puesto.class);
+            configuration.addAnnotatedClass(com.edu.umg.model.Personal.class);
+            
             sessionFactory = configuration.buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Initial SessionFactory creation failed." + ex);

@@ -20,11 +20,11 @@ public class Prestamo {
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
-    @Temporal(TemporalType.DATE)
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") // Formato de fecha
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") // Formato de fecha
     private Date fecha_prestamo;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") // Formato de fecha
     private Date fecha_devolucion;
 

@@ -2,10 +2,13 @@ package com.edu.umg.controller;
 
 import com.edu.umg.config.HibernateUtil;
 import com.edu.umg.model.Prestamo;
+import java.util.Calendar;
+import java.util.Date;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
+import java.util.TimeZone;
 
 public class PrestamoController {
 
@@ -38,12 +41,29 @@ public class PrestamoController {
     }
 
     // Crear un nuevo préstamo
-    public void createPrestamo(Prestamo prestamo) {
+   public void createPrestamo(Prestamo prestamo) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
+            
+            // Formatear la fecha de préstamo
+            Date fechaPrestamo = prestamo.getFecha_prestamo();
+                Calendar calendar_prestamo = Calendar.getInstance();
+                calendar_prestamo.setTime(fechaPrestamo);
+                calendar_prestamo.setTimeZone(TimeZone.getTimeZone("UTC"));
+                prestamo.setFecha_prestamo(calendar_prestamo.getTime());
+            
+            
+            // Formatear la fecha de devolución
+            Date fechaDevolucion = prestamo.getFecha_devolucion();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(fechaDevolucion);
+                calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
+                prestamo.setFecha_devolucion(calendar.getTime());
+            
+
             session.save(prestamo);
             transaction.commit();
         } catch (Exception e) {
@@ -61,6 +81,25 @@ public class PrestamoController {
 
         try {
             transaction = session.beginTransaction();
+            
+            // Formatear la fecha de préstamo
+            Date fechaPrestamo = prestamo.getFecha_prestamo();
+            if (fechaPrestamo != null) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(fechaPrestamo);
+                calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
+                prestamo.setFecha_prestamo(calendar.getTime());
+            }
+            
+            // Formatear la fecha de devolución
+            Date fechaDevolucion = prestamo.getFecha_devolucion();
+            if (fechaDevolucion != null) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(fechaDevolucion);
+                calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
+                prestamo.setFecha_devolucion(calendar.getTime());
+            }
+
             session.update(prestamo);
             transaction.commit();
         } catch (Exception e) {
@@ -70,5 +109,4 @@ public class PrestamoController {
             session.close();
         }
     }
-
 }

@@ -23,10 +23,12 @@ public class Autor {
     @Column(columnDefinition = "TEXT")
     private String observaciones;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date fecha_registro;
 
+    
+    
     // Getters y Setters
 
     public int getId_autor() {

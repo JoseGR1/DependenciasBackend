@@ -5,7 +5,11 @@ import com.edu.umg.config.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import com.edu.umg.model.Autor;
+import java.time.Instant;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class AutorController {
 
@@ -54,38 +58,50 @@ public class AutorController {
         return autor;
     }
 
-    // Crear un nuevo autor
-    public void createAutor(Autor autor) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
+public void createAutor(Autor autor) {
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    Transaction transaction = null;
 
-        try {
-            transaction = session.beginTransaction();
-            session.save(autor);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
+    try {
+        transaction = session.beginTransaction();
+        Date fechaRegistro = autor.getFecha_registro();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fechaRegistro);
+        calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
+        autor.setFecha_registro(calendar.getTime());
+        session.save(autor);
+        transaction.commit();
+    } catch (Exception e) {
+        if (transaction != null) transaction.rollback();
+        e.printStackTrace();
+    } finally {
+        session.close();
     }
+}
 
-    // Actualizar un autor existente
-    public void updateAutor(Autor autor) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
+  // Actualizar un autor existente
+public void updateAutor(Autor autor) {
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    Transaction transaction = null;
 
-        try {
-            transaction = session.beginTransaction();
-            session.update(autor);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
+    try {
+        transaction = session.beginTransaction();
+        
+        Date fechaRegistro = autor.getFecha_registro();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fechaRegistro);
+        calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
+        autor.setFecha_registro(calendar.getTime());
+
+        session.update(autor);
+        transaction.commit();
+    } catch (Exception e) {
+        if (transaction != null) transaction.rollback();
+        e.printStackTrace();
+    } finally {
+        session.close();
     }
+}
+
 }
 

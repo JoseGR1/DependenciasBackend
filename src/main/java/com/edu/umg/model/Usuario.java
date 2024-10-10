@@ -23,11 +23,11 @@ public class Usuario {
     private String correo;
     private String telefono;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date fecha_nacimiento;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date fecha_registro;
 
@@ -35,7 +35,8 @@ public class Usuario {
     private String estado;
 
     // Constructor vacío
-    public Usuario() {}
+    public Usuario() {
+    }
 
     // Getters y Setters
     public int getId_usuario() {
